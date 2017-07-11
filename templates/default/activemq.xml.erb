@@ -59,19 +59,15 @@
                     <constantPendingMessageLimitStrategy limit="1000"/>
                   </pendingMessageLimitStrategy>
                 </policyEntry>
-      <% unless node['activemq']['dlq_process_expired'] -%>
       <!-- Set the following policy on all queues using the '>' wildcard -->
                 <policyEntry queue=">">
                  <!--
-                   Tell the dead letter strategy not to process expired messages
-                   so that they will just be discarded instead of being sent to
-                   the DLQ
+                    Expire the messages from the dlq after a set time 
                  -->
                  <deadLetterStrategy>
-                   <sharedDeadLetterStrategy processExpired="false" />
+                   <sharedDeadLetterStrategy expiration="604800000" processExpired="true"  processNonPersistent="true" />
                  </deadLetterStrategy>
                </policyEntry>
-      <% end -%>
               </policyEntries>
             </policyMap>
         </destinationPolicy>
