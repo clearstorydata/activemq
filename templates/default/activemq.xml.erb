@@ -38,7 +38,7 @@
         The <broker> element is used to configure the ActiveMQ broker.
     -->
     <broker xmlns="http://activemq.apache.org/schema/core" brokerName="localhost" dataDirectory="${activemq.data}">
-        <% if node['activemq']['enable_broker_statistics'] -%> 
+        <% if node['activemq']['enable_broker_statistics'] -%>
         <plugins>
           <statisticsBrokerPlugin/>
         </plugins>
@@ -59,6 +59,15 @@
                     <constantPendingMessageLimitStrategy limit="1000"/>
                   </pendingMessageLimitStrategy>
                 </policyEntry>
+      <!-- Set the following policy on all queues using the '>' wildcard -->
+                <policyEntry queue=">">
+                 <!--
+                    Expire the messages from the dlq after a set time 
+                 -->
+                 <deadLetterStrategy>
+                   <sharedDeadLetterStrategy expiration="604800000" processExpired="true"  processNonPersistent="true" />
+                 </deadLetterStrategy>
+               </policyEntry>
               </policyEntries>
             </policyMap>
         </destinationPolicy>
@@ -121,7 +130,7 @@
               %>maximumConnections=1000&amp;wireFormat.maxFrameSize=104857600"/>
             <transportConnector name="amqp" uri="amqp://0.0.0.0:5672?maximumConnections=1000&amp;wireFormat.maxFrameSize=104857600"/>
 <% if node['activemq']['enable_stomp'] -%>
-            <transportConnector name="stomp" uri="stomp://0.0.0.0:61613?<%= 
+            <transportConnector name="stomp" uri="stomp://0.0.0.0:61613?<%=
               node['activemq']['transport_protocols'] ?
                 "transport.enabledProtocols=#{node['activemq']['transport_protocols']}&amp;" :
                 ''
