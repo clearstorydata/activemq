@@ -59,15 +59,14 @@
                     <constantPendingMessageLimitStrategy limit="1000"/>
                   </pendingMessageLimitStrategy>
                 </policyEntry>
-      <!-- Set the following policy on all queues using the '>' wildcard -->
-                <policyEntry queue=">">
-                 <!--
-                    Expire the messages from the dlq after a set time 
-                 -->
-                 <deadLetterStrategy>
-                   <sharedDeadLetterStrategy expiration="604800000" processExpired="true"  processNonPersistent="true" />
-                 </deadLetterStrategy>
-               </policyEntry>
+                <policyEntry queue=">" >
+                <!--
+                   Expire the message from the dlq
+                 -->
+                 <deadLetterStrategy>
+                   <sharedDeadLetterStrategy expiration="604800000" processExpired="true" processNonPersistent="true" />
+                 </deadLetterStrategy>
+                </policyEntry>
               </policyEntries>
             </policyMap>
         </destinationPolicy>
