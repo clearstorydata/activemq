@@ -37,7 +37,7 @@
     <!--
         The <broker> element is used to configure the ActiveMQ broker.
     -->
-    <broker xmlns="http://activemq.apache.org/schema/core" brokerName="localhost" dataDirectory="${activemq.data}">
+    <broker xmlns="http://activemq.apache.org/schema/core" brokerName="localhost" dataDirectory="${activemq.data}" schedulePeriodForDestinationPurge="600000">
         <% if node['activemq']['enable_broker_statistics'] -%>
         <plugins>
           <statisticsBrokerPlugin/>
@@ -59,13 +59,15 @@
                     <constantPendingMessageLimitStrategy limit="1000"/>
                   </pendingMessageLimitStrategy>
                 </policyEntry>
-                <policyEntry queue=">" >
+                <policyEntry queue=">" gcInactiveDestinations="true" inactiveTimeoutBeforeGC="259200000" >
                 <!--
                    Expire the message from the dlq
                  -->
                  <deadLetterStrategy>
                    <sharedDeadLetterStrategy expiration="604800000" processExpired="true" processNonPersistent="true" />
                  </deadLetterStrategy>
+                </policyEntry>
+                <policyEntry queue="Consumer.derive.VirtualTopic.entities" queuePrefetch="1" maxExpirePageSize="4000">
                 </policyEntry>
               </policyEntries>
             </policyMap>
