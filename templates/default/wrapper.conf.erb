@@ -59,7 +59,7 @@ wrapper.java.additional.10=-Dactivemq.conf=%ACTIVEMQ_CONF%
 wrapper.java.additional.11=-Dactivemq.data=%ACTIVEMQ_DATA%
 
 # JMX Exporter Options
-<% if ['activemq']['monitoring']['enabled'] %>
+<% if node['activemq']['monitoring']['enabled'] %>
 wrapper.java.additional.12=<%= node['activemq']['wrapper']['jmx_exporter_args'] %>
 <% end %>
 
