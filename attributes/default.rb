@@ -26,6 +26,9 @@ default['activemq']['wrapper']['keystore_password'] = 'password'
 default['activemq']['wrapper']['truststore_password'] = 'password'
 default['activemq']['wrapper']['keystore_path'] = '%ACTIVEMQ_CONF%/broker.ks'
 default['activemq']['wrapper']['truststore_path'] = '%ACTIVEMQ_CONF%/broker.ts'
+default['activemq']['wrapper']['jmx_exporter_args'] = '-javaagent:/opt/prometheus/jmx_exporter/lib/jmx_prometheus_javaagent-0.1.0.jar=1234:/opt/prometheus/jmx_exporter/config/activemq.yml'
+
+default['activemq']['monitoring']['enabled'] = false
 
 default['activemq']['enabled'] = true
 default['activemq']['enable_stomp'] = true

@@ -58,6 +58,11 @@ wrapper.java.additional.9=-Djava.util.logging.config.file=logging.properties
 wrapper.java.additional.10=-Dactivemq.conf=%ACTIVEMQ_CONF%
 wrapper.java.additional.11=-Dactivemq.data=%ACTIVEMQ_DATA%
 
+# JMX Exporter Options
+<% if ['activemq']['monitoring']['enabled'] %>
+wrapper.java.additional.12=<%= node['activemq']['wrapper']['jmx_exporter_args'] %>
+<% end %>
+
 # Uncomment to enable jmx
 #wrapper.java.additional.n=-Dcom.sun.management.jmxremote.port=1616
 #wrapper.java.additional.n=-Dcom.sun.management.jmxremote.authenticate=false
